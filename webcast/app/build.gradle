@@ -1,0 +1,89 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    defaultConfig {
+        applicationId rootProject.ext.appId['app']
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        externalNativeBuild {
+            cmake {
+                cppFlags ""
+                //arguments "-DANDROID_ARM_NEON=TRUE", "-DANDROID_PLATFORM=android-21", "-DANDROID_STL=c++_shared"
+                //abiFilters "armeabi"//, "armeabi-v7a" //, "arm64-v8a", "x86", "x86_64", "mips", "mips64"
+            }
+        }
+    }
+    signingConfigs {
+        config {
+            storeFile file(rootProject.ext.signing.storeFile)
+            storePassword rootProject.ext.signing.storePassword
+            keyAlias = rootProject.ext.signing.keyAlias
+            keyPassword rootProject.ext.signing.keyPassword
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path "src/main/cpp/CMakeLists.txt"
+            version "3.10.2"
+        }
+    }
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation dependLib["appcompat"]
+    //implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation dependLib["constraintlayout"]
+    //testImplementation 'junit:junit:4.12'
+    testImplementation dependLib["junit"]
+    //androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation dependLib["testext"]
+    //androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation dependLib["espresso"]
+
+    //腾讯bugly
+    implementation 'com.tencent.bugly:crashreport:latest.release' //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+    implementation 'com.tencent.bugly:nativecrashreport:latest.release' //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
+
+    implementation dependLib["butterknife"]
+    annotationProcessor dependLib["butterknife-compiler"]
+
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    implementation 'com.google.code.gson:gson:2.8.4'
+    implementation 'com.squareup.retrofit2:retrofit:2.1.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    implementation 'io.reactivex:rxandroid:1.2.0'
+    implementation "io.reactivex.rxjava2:rxjava:2.1.14"
+
+    implementation 'com.blankj:utilcode:1.20.1'
+
+    implementation 'org.greenrobot:eventbus:3.2.0'
+    //implementation 'com.squareup:otto:1.3.8'
+
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+}
