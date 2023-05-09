@@ -87,5 +87,5 @@ dependencies {
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
 
-
+    implementation 'com.github.VinsonGuo:android-kline:2.0.0-alpha'
 }
