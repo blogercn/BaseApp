@@ -87,5 +87,10 @@ dependencies {
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
 
+    //股票1
+    //https://github.com/blogercn/android-kline
     implementation 'com.github.VinsonGuo:android-kline:2.0.0-alpha'
+    //股票2
+    //https://www.mianshigee.com/project/LambdaXiao-StockChart-MPAndroidChart/
+    implementation 'com.github.LambdaXiao:StockChart-MPAndroidChart:1.1'
 }
